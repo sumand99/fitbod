@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Workout Page</title>
+    <style>
+        body{
+            font-family: arial;
+            margin: 0;
+        }
+        nav{
+            background: #ff5353;
+            padding: 20px 10px;
+        }
+        nav ul{
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0;
+        }
+        nav li{
+            list-style-type: none;
+            display: inline-block;
+            margin: 0 10px 0 0;
+        }
+        nav a{
+            color: #fff;
+            font-size: 18px;
+            background: rgba(255,255,255,0.2);
+            text-decoration: none;
+            padding: 10px;
+            display: block;
+        }
+        main, header{
+            max-width: 960px;
+            margin: 30px auto;
+            padding: 0 10px;
+            color: #333;
+        }
+    </style>
+  </head>
+  <body>
+
+    <form action="/workout" method="POST" autocomplete="off">
+      <input type="hidden" name="_id" value="{{user._id}}">
+      <label>User Name</label>
+      <input type="text" class="form-control" name="user_name" placeholder="User's Fullname" value="{{users.user_name}}">
+
+      <label>Workout Duration</label>
+        <input type="text" class="form-control" name="duration" placeholder="Workout Duration" value="{{workout.duration}}">
+        <button type="submit" class="btn btn-info">
+        Submit</button>
+    </form>
+
+  </body>
+</html>
