@@ -3,6 +3,11 @@ const router = require('express').Router();
 const Workouts = require("../model/workouts");
 const Fitboduser = require("../model/fitboduser");
 
+var bodyParser = require('body-parser');
+
+// Create application/x-www-form-urlencoded parser
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
+
 // API version
 router.get('/version', (req, res) => {
     // handle with passport
@@ -12,7 +17,7 @@ router.get('/version', (req, res) => {
 // API version
 router.route("/addworkout").post(function(req, res) {});
 
-//fetchdata
+//fetch workout data
 router.route("/workouts").get(function(req, res) {
   console.log("Fetch all Workouts");
 
@@ -26,8 +31,20 @@ router.route("/workouts").get(function(req, res) {
   });
 });
 
-//fetchdata
-router.route("/users").get(function(req, res) {
+//edit workoutdata
+router.route("/updateworkout").post(function(req, res) {
+console.log("req =" + req);
+  var response = {
+      email: req.body.email,
+      duration: req.body.duration
+   };
+   console.log(response);
+   res.end(JSON.stringify(response));
+});
+
+
+//fetch Users
+router.route("/fitboduser").get(function(req, res) {
   console.log("Fetch all Users");
 
   Fitboduser.find()

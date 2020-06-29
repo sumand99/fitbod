@@ -2,10 +2,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const fitboduserSchema = new Schema({
-email_add: String
+const userSchema = new Schema({
+  email_add: String,
 });
 
-const Fitboduser = mongoose.model('fitboduser',fitboduserSchema);
+const Fitboduser = mongoose.model('users',userSchema);
 
 module.exports = Fitboduser;

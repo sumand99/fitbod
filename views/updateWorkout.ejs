@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+<html lang="en" dir="ltr">
 <head>
       <meta charset="utf-8">
       <title>Fitbod</title>
@@ -30,7 +31,7 @@
               padding: 10px;
               display: block;
           }
-          main, header, form{
+          main, header{
               max-width: 960px;
               margin: 30px auto;
               padding: 0 10px;
@@ -39,35 +40,15 @@
       </style>
   </head>
   <body>
-      <nav>
-        <ul>
-            <li><a href="/auth/logout">Logout</a></li>
-            <li><a href="/updateworkout">Update Workout</a></li>
-            <li><a href="/">Homepage</a></li>
-        </ul>
-      </nav>
-      <header>
-          <h1>Fitbod</h1>
-          <h2>Homepage</h2>
-      </header>
-      <main>
-          <p>Welcome to Fitbod :)</p>
-          <br>
-          <form action="/api/updateworkout" method="POST">
-          <div>
-            <label>Email</label>
-            <input type="text" placeholder="Enter Email Address" name="email" required>
-          </div>
-            <br><br>
-            <div>
-            <label>Workout Duration</label>
-            <input type="text" placeholder="Enter Duration" name="duration" required>
-          </div>
-          <br><br>
-          <div>
-             <button type="submit">Submit</button>
-           </div>
-          </form>
-      </main>
+
+    <form action="/api/updateworkout" method="POST">
+
+      <label>Email</label>
+      <input type="text" placeholder="Enter Email Address" name="email" required>
+      <label>Workout Duration</label>
+      <input type="text" placeholder="Enter Duration" name="duration" required>
+       <button type="submit">Submit</button>
+    </form>
+
   </body>
 </html>
