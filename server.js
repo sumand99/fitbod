@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const keys = require('./config/keys');
 const apiRoutes = require('./routes/api-routes');
 var bodyParser = require('body-parser');
+var methodOverride = require('method-override');
 
 const port = process.env.PORT || 5000;
 const app = express();

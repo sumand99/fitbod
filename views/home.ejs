@@ -37,12 +37,77 @@
               color: #333;
           }
       </style>
+      <script>
+
+        function getWorkouts() {
+
+        const xhr = new XMLHttpRequest();
+
+        xhr.onload = () => {
+            // process response
+            if (xhr.status == 200) {
+                // parse JSON data
+                var myObj = JSON.parse(xhr.response);
+                var text = '';
+                var theHTML = "<table name='users' id='users' border='1'>";
+                theHTML += "<td>Select</td><td>rowId</td><td>Email User</td><td>Date </td><td>Duration</td>";
+                for(var i=0;i<myObj.length;i++){
+                  theHTML += "<tr>";
+                  theHTML += "<td>" + "<input type='checkbox' id='myCheck' onclick='javascript:selectRow()'/>" + "</td>"+
+                  "<td>" + myObj[i]._id+ "</td>" +
+                  "<td>" + myObj[i].email_add + "</td>" +"<td>" + myObj[i].workout_date + "</td>"+
+                  "<td>" + myObj[i].workout_duration + "</td>";
+                  theHTML += "</tr>";
+                }
+                  theHTML += "</table>";
+                document.getElementById("result").innerHTML = theHTML;
+            } else {
+                console.error('Error!');
+            }
+        };
+        xhr.open('GET', 'http://localhost:5000/api/workouts/user10@fitbod.me');
+        xhr.send();
+      }
+
+      function clear(){
+          document.getElementById("result").innerHTML = "";
+          document.getElementById("addnewtable").style.display = "none";
+          document.getElementById("updatetable").style.display = "none";
+      }
+
+      function selectRow() {
+              try {
+              var table = document.getElementById('users');
+              var rowCount = table.rows.length;
+
+              for(var i=1; i<rowCount; i++) {
+                  var row = table.rows[i];
+                  var chkbox = row.cells[0].childNodes[0];
+                  if(null != chkbox && true == chkbox.checked) {
+                    var id = document.getElementById('users').rows[i].cells.item(1).innerHTML;
+                    var email_add = document.getElementById('users').rows[i].cells.item(2).innerHTML;
+                    var workout_duration = document.getElementById('users').rows[i].cells.item(4).innerHTML;
+
+                    document.getElementById("update").id.value = id;
+                    document.getElementById("update").email_add.value = email_add;
+                    document.getElementById("update").workout_duration.value = workout_duration;
+                  }
+              }
+              }catch(e) {
+                  alert(e);
+              }
+            }
+    function showUpdateForm() {
+            document.getElementById("updatetable").style.display = "block";
+    }
+    function showAddWorkoutForm(){
+            document.getElementById("addnewtable").style.display = "block";
+    }
+      </script>
   </head>
   <body>
       <nav>
         <ul>
-            <li><a href="/auth/logout">Logout</a></li>
-            <li><a href="/updateworkout">Update Workout</a></li>
             <li><a href="/">Homepage</a></li>
         </ul>
       </nav>
@@ -53,21 +118,89 @@
       <main>
           <p>Welcome to Fitbod :)</p>
           <br>
-          <form action="/api/updateworkout" method="POST">
-          <div>
+              <li> <a href="javascript:getWorkouts()">Workout History</a></li>
+              <li> <a href="javascript:showAddWorkoutForm()">Add New Workout</a></li>
+              <li> <a href="javascript:showUpdateForm()">Update</a></li>
+            <li><a href="javascript:clear()">Clear</a></li>
+            <div id='result' name='result'> </div>
+            <p>
+          <table  id="addnewtable" name="addnewtable"style="display:none">
+           <form id="addnew" name="addnew" action="/api/addworkout" method="POST">
+            <tr>
+              <td>
+               <label>Date</label>
+              </td>
+              <td>
+               <input type="text" placeholder="mm/dd/yyyy" name="date" required>
+              </td>
+            </tr><tr>
+            <td>
             <label>Email</label>
-            <input type="text" placeholder="Enter Email Address" name="email" required>
-          </div>
-            <br><br>
-            <div>
-            <label>Workout Duration</label>
-            <input type="text" placeholder="Enter Duration" name="duration" required>
-          </div>
-          <br><br>
-          <div>
+          </td> <td>
+            <input type="text" placeholder="abc@fitbod.me" name="email_add" required>
+          </td></tr>
+            <tr><td>
+            <label>Duration</label>
+          </td>
+          <td>
+            <input type="text" placeholder="Duration in Minutes" name="workout_duration" required>
+          </td>
+        </tr>
+          <tr><td>
              <button type="submit">Submit</button>
-           </div>
+           </td></tr>
           </form>
+        </table>
+
+        <table  id="updatetable" name="updatetable" style="display:none">
+         <form id="update" name="update" action="/api/updateworkout" method="POST">
+          <tr>
+            <td>
+             <label>Id</label>
+            </td>
+            <td>
+             <input type="text" name="id" required readonly style="background-color:lavender">
+            </td>
+          </tr><tr>
+          <td>
+          <label>Email</label>
+        </td> <td>
+          <input type="text" name="email_add" required readonly style="background-color:lavender">
+        </td></tr>
+          <tr><td>
+          <label>Duration</label>
+        </td>
+        <td>
+          <input type="text" placeholder="Duration in Minutes" name="workout_duration" required>
+        </td>
+      </tr>
+        <tr><td>
+           <button type="submit">Submit</button>
+         </td></tr>
+        </form>
+      </table>
+
+
+        <!--
+          <form id="update" name="update" action="/api/updateworkout" method="POST" style="display:none" >
+           <div>
+             <label>Id</label>
+             <input type="text" placeholder="Enter Id" name="id" required readonly>
+           </div>
+         <div>
+           <label>Email</label>
+           <input type="text" placeholder="Enter Email Address" name="email_add" required readonly>
+         </div>
+           <br><br>
+           <div>
+           <label>Workout Duration</label>
+           <input type="text" placeholder="Enter Duration" name="workout_duration" required>
+         </div>
+         <br><br>
+         <div>
+            <button type="submit">Submit</button>
+          </div>
+         </form> -->
       </main>
   </body>
 </html>
