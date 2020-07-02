@@ -49,7 +49,7 @@
                 // parse JSON data
                 var myObj = JSON.parse(xhr.response);
                 var text = '';
-                var theHTML = "<table name='users' id='users' border='1'>";
+                var theHTML = "<B><U>Workout History</U></B><br><br><table name='users' id='users' border='1'>";
                 theHTML += "<td>Select</td><td>rowId</td><td>Email User</td><td>Date </td><td>Duration</td>";
                 for(var i=0;i<myObj.length;i++){
                   theHTML += "<tr>";
@@ -65,7 +65,7 @@
                 console.error('Error!');
             }
         };
-        var requri = 'https://fitbod.herokuapp.com/api/workouts/'+result
+        var requri = 'http://localhost:5000/api/workouts/'+result
         xhr.open('GET',requri );
         xhr.send();
       }
@@ -130,7 +130,7 @@
               console.error('Error!');
           }
       };
-      xhr.open('GET', 'https://fitbod.herokuapp.com/api/fitboduser');
+      xhr.open('GET', 'http://localhost:5000/api/fitboduser');
       xhr.send();
     }
   </script>
@@ -143,7 +143,6 @@
       </nav>
       <header>
           <h1>Fitbod</h1>
-          <h2>Homepage</h2>
       </header>
       <main>
           <p>Welcome to Fitbod :)</p>
@@ -153,21 +152,22 @@
               <br>
               <li> <a href="javascript:showAddWorkoutForm()">Add New Workout</a></li>
               <li> <a href="javascript:showUpdateForm()">Update</a></li>
-            <li><a href="javascript:clear()">Clear</a></li>
-            <div id='result' name='result'> </div>
+              <li> <a href="javascript:clear()">Clear</a></li>
+              <br>
+            <div id='result' name='result'></div>
             <p>
           <table  id="addnewtable" name="addnewtable"style="display:none">
            <form id="addnew" name="addnew" action="/api/addworkout" method="POST">
             <tr>
               <td>
-               <label>Date</label>
+               <label>Email</label>
               </td>
               <td>
                 <input type="text" name="email_add" readonly style="background-color:lavender">
               </td>
             </tr><tr>
             <td>
-            <label>Email</label>
+            <label>Date</label>
           </td> <td>
             <input type="text" placeholder="mm/dd/yyyy" name="date" required>
           </td></tr>

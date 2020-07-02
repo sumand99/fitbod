@@ -39,8 +39,6 @@ router.route("/workouts/:emailid").get(function(req, res) {
 	});
 });
 
-
-
 //delete workout data with id
 router.route("/workouts/:id").delete(function(req, res) {
   console.log("delete Workouts of="+req.params.id);
