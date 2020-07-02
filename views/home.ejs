@@ -65,7 +65,7 @@
                 console.error('Error!');
             }
         };
-        var requri = 'http://localhost:5000/api/workouts/'+result
+        var requri = 'https://fitbod.herokuapp.com/api/workouts/'+result
         xhr.open('GET',requri );
         xhr.send();
       }
@@ -130,7 +130,7 @@
               console.error('Error!');
           }
       };
-      xhr.open('GET', 'http://localhost:5000/api/fitboduser');
+      xhr.open('GET', 'https://fitbod.herokuapp.com/api/fitboduser');
       xhr.send();
     }
   </script>
