@@ -40,9 +40,9 @@
       <script>
 
         function getWorkouts() {
-
+        var e = document.getElementById("userselect");
+  			var result = e.options[e.selectedIndex].text;
         const xhr = new XMLHttpRequest();
-
         xhr.onload = () => {
             // process response
             if (xhr.status == 200) {
@@ -65,7 +65,8 @@
                 console.error('Error!');
             }
         };
-        xhr.open('GET', 'https://fitbod.herokuapp.com/api/workouts/user1@fitbod.me');
+        var requri = 'https://fitbod.herokuapp.com/api/workouts/'+result
+        xhr.open('GET',requri );
         xhr.send();
       }
 
@@ -102,10 +103,39 @@
     }
     function showAddWorkoutForm(){
             document.getElementById("addnewtable").style.display = "block";
+            var e = document.getElementById("userselect");
+            var result = e.options[e.selectedIndex].text;
+            document.getElementById("addnew").email_add.value = result;
     }
-      </script>
+    function callUserList(){
+      const xhr = new XMLHttpRequest();
+      var useSelect = document.createElement("SELECT");
+      useSelect.setAttribute("id","userselect");
+      useSelect.setAttribute("name","userselect");
+      xhr.onload = () => {
+          // process response
+          if (xhr.status == 200) {
+              // parse JSON data
+              var myObj = JSON.parse(xhr.response);
+
+              for(var i=0;i<myObj.length;i++){
+               var option = document.createElement("OPTION");
+                option.innerHTML = myObj[i].email_add;
+                option.value = myObj[i].email_add;
+                useSelect.options.add(option);
+              }
+              var div = document.getElementById("selectuser");
+              div.appendChild(useSelect);
+          } else {
+              console.error('Error!');
+          }
+      };
+      xhr.open('GET', 'https://fitbod.herokuapp.com/api/fitboduser');
+      xhr.send();
+    }
+  </script>
   </head>
-  <body>
+  <body onload="javascript:callUserList()">
       <nav>
         <ul>
             <li><a href="/">Homepage</a></li>
@@ -118,7 +148,9 @@
       <main>
           <p>Welcome to Fitbod :)</p>
           <br>
-              <li> <a href="javascript:getWorkouts()">Workout History</a></li>
+              <div id='selectuser' name='selectuser'>Select Workout History&nbsp;</div>
+              <button type="button" id="getUser" name="getUser" onclick="javascript:getWorkouts()">Fetch</button>
+              <br>
               <li> <a href="javascript:showAddWorkoutForm()">Add New Workout</a></li>
               <li> <a href="javascript:showUpdateForm()">Update</a></li>
             <li><a href="javascript:clear()">Clear</a></li>
@@ -131,13 +163,13 @@
                <label>Date</label>
               </td>
               <td>
-               <input type="text" placeholder="mm/dd/yyyy" name="date" required>
+                <input type="text" name="email_add" readonly style="background-color:lavender">
               </td>
             </tr><tr>
             <td>
             <label>Email</label>
           </td> <td>
-            <input type="text" placeholder="abc@fitbod.me" name="email_add" required>
+            <input type="text" placeholder="mm/dd/yyyy" name="date" required>
           </td></tr>
             <tr><td>
             <label>Duration</label>
@@ -179,28 +211,6 @@
          </td></tr>
         </form>
       </table>
-
-
-        <!--
-          <form id="update" name="update" action="/api/updateworkout" method="POST" style="display:none" >
-           <div>
-             <label>Id</label>
-             <input type="text" placeholder="Enter Id" name="id" required readonly>
-           </div>
-         <div>
-           <label>Email</label>
-           <input type="text" placeholder="Enter Email Address" name="email_add" required readonly>
-         </div>
-           <br><br>
-           <div>
-           <label>Workout Duration</label>
-           <input type="text" placeholder="Enter Duration" name="workout_duration" required>
-         </div>
-         <br><br>
-         <div>
-            <button type="submit">Submit</button>
-          </div>
-         </form> -->
       </main>
   </body>
 </html>

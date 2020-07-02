@@ -60,7 +60,6 @@ console.log("req =" + req);
    let id = new mongoose.Types.ObjectId(req.body.id);
    	var data = {
       email_add: req.body.email_add,
-      //workout_date: '7/28/2020',
       workout_duration: req.body.workout_duration
    	}
    	// save the user
